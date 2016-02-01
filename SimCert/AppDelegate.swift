@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  CertOSX
+//  SimCert
 //
 //  Created by Yannick Heinrich on 29.01.16.
 //  Copyright © 2016 Yannick Heinrich. All rights reserved.
@@ -14,11 +14,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     var analyzer: ElementsAnalyzer?
+    var statusBarItem: NSStatusItem?
+        
+    @IBOutlet weak var statusItem: NSMenuItem!
+    @IBOutlet weak var iconMenu: NSMenu!
 
+    //!MARK: - App lifecycle
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         print("Starting agent...")
         
+        buildMenu()
         // Check if API Enabled
         
         let value = kAXTrustedCheckOptionPrompt.takeUnretainedValue()
@@ -26,16 +32,53 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if(AXIsProcessTrustedWithOptions(options)){
             
             startAnalyzer()
-        } else {
-           
         }
     }
     
     func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
     }
+    
 
+    //!MARK: - App Menu
+    
+    func buildMenu() {
+        
+        // Status item
+        let item = NSStatusBar.systemStatusBar().statusItemWithLength(NSVariableStatusItemLength)
+        
+        item.image = NSImage(named: "sim_cert")
+        item.image?.template = true
+        item.highlightMode = true
+        
+        item.toolTip = "Tool tip"
+        item.action = "actionItemTriggered:"
+        
+        item.menu = iconMenu
+        
+        statusBarItem = item
+    }
+    
+    @IBAction func aboutItemTriggered(sender: AnyObject?){
+        print("About")
+        
+    }
+    
+    func actionItemTriggered(sender: AnyObject?){
+        print("Triggered")
+    }
+    
+    
+    @IBAction func quitItemTriggered(sender: AnyObject) {
+        shutdown()
+    }
+    
+    func shutdown(){
+        NSApp.terminate(nil)
+    }
 
+    //!MARK: - Analyzer
+    
     func startAnalyzer() {
         self.analyzer = ElementsAnalyzer()
         
@@ -54,7 +97,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
                 // Need to be done two time
                 NSThread.sleepForTimeInterval(3.0)
-                actor.searchButtonAndClickQuartzCore("Install")                
+                //actor.searchButtonAndClick("Install")
+                actor.searchButtonAndClickQuartzCore("Install")
                 
                 NSThread.sleepForTimeInterval(3.0)
                 actor.searchButtonAndClick("Done")

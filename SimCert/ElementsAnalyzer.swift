@@ -1,6 +1,6 @@
 //
 //  ElementsAnalyzer.swift
-//  CertOSX
+//  SimCert
 //
 //  Created by Yannick Heinrich on 30.01.16.
 //  Copyright © 2016 Yannick Heinrich. All rights reserved.
