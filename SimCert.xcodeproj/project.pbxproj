@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B65663C1C63E9AB0029F9F4 /* SimulatorInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B65663B1C63E9AB0029F9F4 /* SimulatorInstaller.swift */; };
 		0BA08B801C5BD93C00FE66CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA08B7F1C5BD93C00FE66CD /* AppDelegate.swift */; };
 		0BA08B821C5BD93C00FE66CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BA08B811C5BD93C00FE66CD /* Assets.xcassets */; };
 		0BA08B851C5BD93C00FE66CD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BA08B831C5BD93C00FE66CD /* MainMenu.xib */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B65663B1C63E9AB0029F9F4 /* SimulatorInstaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimulatorInstaller.swift; sourceTree = "<group>"; };
 		0BA08B7C1C5BD93C00FE66CD /* SimCert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimCert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BA08B7F1C5BD93C00FE66CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BA08B811C5BD93C00FE66CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,6 +43,7 @@
 		0BA08B731C5BD93C00FE66CD = {
 			isa = PBXGroup;
 			children = (
+				0BAD44991C62AC96009F84B7 /* Common */,
 				0BA08B8E1C5D2C0D00FE66CD /* CoreGraphics.framework */,
 				0BA08B7E1C5BD93C00FE66CD /* SimCert */,
 				0BA08B7D1C5BD93C00FE66CD /* Products */,
@@ -64,8 +67,16 @@
 				0BA08B831C5BD93C00FE66CD /* MainMenu.xib */,
 				0BA08B861C5BD93C00FE66CD /* Info.plist */,
 				0BA08B8C1C5CB18200FE66CD /* ElementsAnalyzer.swift */,
+				0B65663B1C63E9AB0029F9F4 /* SimulatorInstaller.swift */,
 			);
 			path = SimCert;
+			sourceTree = "<group>";
+		};
+		0BAD44991C62AC96009F84B7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BA08B8D1C5CB18200FE66CD /* ElementsAnalyzer.swift in Sources */,
+				0B65663C1C63E9AB0029F9F4 /* SimulatorInstaller.swift in Sources */,
 				0BE0CCA71C5E5C0E00CCACB2 /* SimulatorOperator.swift in Sources */,
 				0BA08B801C5BD93C00FE66CD /* AppDelegate.swift in Sources */,
 			);

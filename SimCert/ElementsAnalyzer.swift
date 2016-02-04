@@ -21,8 +21,6 @@ struct SimulatorWindow {
 class ElementsAnalyzer {
     
 
-        
-    
     class func rawSimulatorWindows() -> [[String:AnyObject]]{
         
         if let windowsList = CGWindowListCopyWindowInfo(.OptionOnScreenOnly, 0){
@@ -42,6 +40,25 @@ class ElementsAnalyzer {
         
         
         fatalError("Unpredictable behaviour")
+    }
+    
+    
+    func waitUntilSimulatorLaunched() -> SimulatorWindow? {
+        
+        let attempt = 5
+        
+        for _ in 0..<attempt {
+            
+            let windows = simulatorWindows()
+
+            if windows.count == 0 {
+                NSThread.sleepForTimeInterval(0.5)
+                continue
+            } else {
+                return windows[0]
+            }
+        }
+        return nil;
     }
     
     func simulatorWindows() -> [SimulatorWindow] {

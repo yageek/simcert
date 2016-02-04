@@ -37,6 +37,20 @@ class SimulatorOperator {
         }
     }
     
+    func waitForHomeScreen() -> Bool {
+        
+        guard let _ = SimulatorOperator.waitForElement(uxElement.takeRetainedValue(), role: kAXSliderRole, title: "Page 1 of 2") else { return false }
+        
+        return true
+    
+    }
+    func waitForInstallScreen() -> Bool {
+        
+        guard let _ = SimulatorOperator.waitForElement(uxElement.takeRetainedValue(), role: kAXButtonRole, title: "Install") else { return false }
+        
+        return true
+        
+    }
     func searchButtonAndClick (title: String) {
         
         guard let element = SimulatorOperator.findElement(uxElement.takeUnretainedValue(), role: kAXButtonRole, title: title) else {
@@ -85,6 +99,22 @@ class SimulatorOperator {
         NSThread.sleepForTimeInterval(1.0)
 
         CGEventPost(.CGHIDEventTap, clickUpEvent)
+    }
+    
+    
+    class func waitForElement(root:AXUIElement, role: String, title: String) -> AXUIElement? {
+        
+        let attempt = 20;
+        
+        for _ in 0 ..< attempt {
+            if let element = SimulatorOperator.findElement(root, role: role, title: title){
+                return element
+            } else {
+                NSThread.sleepForTimeInterval(0.5)
+                continue
+            }
+        }
+        return nil
     }
     
     class func findElement(root:AXUIElement, role: String, title: String) -> AXUIElement? {
