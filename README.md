@@ -3,7 +3,7 @@ SimCert intends to be an usable alternative to [iostrust](https://github.com/yag
 
 [![screencast](sim_cert.gif)]
 
-## How does it works ?
+## How does it work ?
 It relies on the OSX Accessibility API and use some QuartCore Events to  perform some clicks.
 
 # Installation
