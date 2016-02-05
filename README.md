@@ -15,5 +15,5 @@ It relies on the OSX Accessibility API and use some QuartCore Events to  perform
 From command-line:
 
 ```
-/Applications/SimCert.app/Contents/MacOS/SimCert -uuid <Simulator ID> -certificate <Path to certificate>
+simcert -uuid <Simulator ID> -certificate <Path to certificate>
 ```
