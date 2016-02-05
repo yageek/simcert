@@ -1,5 +1,5 @@
-# SimCert
-SimCert intends to be an usable alternative to [iostrust](https://github.com/yageek/iostrust)  helping you to automatically install http root certificates on the iOS simulators.
+# simcert
+simcert intends to be an usable alternative to [iostrust](https://github.com/yageek/iostrust)  helping you to automatically install http root certificates on the iOS simulators.
 
 [![screencast](sim_cert.gif)]
 
