@@ -32,13 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         buildMenu()
         // Check if API Enabled
-        
-        let value = kAXTrustedCheckOptionPrompt.takeUnretainedValue()
-        let options: [String:AnyObject] = [value as String: (true as CFBooleanRef)]
-        if(AXIsProcessTrustedWithOptions(options)){
-            
-            parseArgument()
-        }
+        parseArgument()
     }
     
     func applicationWillTerminate(aNotification: NSNotification) {
