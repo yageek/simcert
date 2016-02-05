@@ -10,7 +10,7 @@ import Foundation
 
 class SimulatorInstaller {
     
-    static let WAIT_STEP_SEC = 5.0
+    static let WAIT_STEP_SEC = 10.0
     static let deltaTime = dispatch_time(DISPATCH_TIME_NOW, Int64(SimulatorInstaller.WAIT_STEP_SEC * Double(NSEC_PER_SEC)))
 
     let UUID: NSUUID
@@ -44,23 +44,15 @@ class SimulatorInstaller {
         
         print("Start Simulator Termination: \(task.terminationStatus)")
         
-        simulatorWindow = self.analyzer.waitUntilSimulatorLaunched()
+        NSThread.sleepForTimeInterval(15.0)
+        simulatorWindow = self.analyzer.simulatorWindows()[0]
         print("Windows:\(simulatorWindow)")
 
     }
     
     func openURL(){
         
-        guard let simulatorWindow = self.simulatorWindow else { print("Simulator does not seems to be launched"); return }
-        
-        let op = SimulatorOperator(simulator: simulatorWindow)
-        op.makeSimulatorVisible()
-        
-        if(!op.waitForHomeScreen()){
-            print("Could not reach home screen")
-            return
-        }
-
+        NSThread.sleepForTimeInterval(5.0)
         
         let task = NSTask()
         task.launchPath = "/usr/bin/xcrun"
@@ -75,25 +67,26 @@ class SimulatorInstaller {
         guard let simulatorWindow = self.simulatorWindow else { print("Simulator does not seems to be launched"); return }
         
         let op = SimulatorOperator(simulator: simulatorWindow)
-        op.makeSimulatorVisible()
-        
-        if(!op.waitForInstallScreen()){
-            print("Could not find install screen")
-            return
-        }
         
         // First Install
+        NSThread.sleepForTimeInterval(5.0)
+        print("=== First Page ")
+        op.searchButtonAndClick("Install")
+        NSThread.sleepForTimeInterval(1.0) //Don't know why but needs to be done two times OR start the simulator first
         op.searchButtonAndClick("Install")
         
-        NSThread.sleepForTimeInterval(3.0)
+        NSThread.sleepForTimeInterval(5.0)
+        print("=== Second Page ")
         op.searchButtonAndClick("Install")
         
         // Need to be done two time
-        NSThread.sleepForTimeInterval(3.0)
+        NSThread.sleepForTimeInterval(5.0)
         //actor.searchButtonAndClick("Install")
+        print("=== Popup Page ")
         op.searchButtonAndClickQuartzCore("Install")
         
-        NSThread.sleepForTimeInterval(3.0)
+        NSThread.sleepForTimeInterval(5.0)
+        print("=== Done Page ")
         op.searchButtonAndClick("Done")
 
         NSThread.sleepForTimeInterval(3.0)
@@ -103,7 +96,7 @@ class SimulatorInstaller {
         
         let task = NSTask()
         task.launchPath = "/usr/bin/osascript"
-        task.arguments = ["-e", "quit app \"Calendar\""]
+        task.arguments = ["-e", "quit app \"Simulator\""]
         task.launch()
         task.waitUntilExit()
         
