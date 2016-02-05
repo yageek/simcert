@@ -8,7 +8,8 @@ It relies on the OSX Accessibility API and use some QuartCore Events to  perform
 
 # Installation
 - Clone project and build the main project.
-- Enable Accessibility API to `Terminal` or `iTerm2`.
+- Enable Accessibility API for `Terminal` or `iTerm2` if you launch from the terminal.
+- Enable Accessibility API for `XCode` if you launch it from XCode.
 
 # Usage
 From command-line:
