@@ -14,24 +14,27 @@ class SimulatorInstaller {
     static let deltaTime = dispatch_time(DISPATCH_TIME_NOW, Int64(SimulatorInstaller.WAIT_STEP_SEC * Double(NSEC_PER_SEC)))
 
     let UUID: NSUUID
-    let certificate: NSURL
+    let certificatesURLs: [NSURL]
     
     var simulatorWindow: SimulatorWindow?
     
     let analyzer = ElementsAnalyzer()
     
-    init(uuid:NSUUID, certificate: NSURL){
+    init(uuid:NSUUID, certificates: [NSURL]){
         self.UUID = uuid
-        self.certificate = certificate
+        self.certificatesURLs = certificates
     }
  
     
     func install(){
-            print("=== Start installing \(self.UUID.UUIDString) with \(self.certificate)")
+            print("=== Start installing \(self.UUID.UUIDString) with \(self.certificatesURLs)")
         
             startSimulator()
-            openURL()
-            installCertificateSequence()
+            for certURL in self.certificatesURLs {
+                openURL(certURL)
+                installCertificateSequence()
+            }
+        
     }
 
     func startSimulator(){
@@ -50,13 +53,13 @@ class SimulatorInstaller {
 
     }
     
-    func openURL(){
+    func openURL(certificateURL: NSURL){
         
         NSThread.sleepForTimeInterval(5.0)
         
         let task = NSTask()
         task.launchPath = "/usr/bin/xcrun"
-        task.arguments = ["simctl", "openurl", "booted", certificate.absoluteString]
+        task.arguments = ["simctl", "openurl", "booted", certificateURL.absoluteString]
         task.launch()
         task.waitUntilExit()
         

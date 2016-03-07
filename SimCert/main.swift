@@ -29,8 +29,17 @@ func getArgumentWithOption(opt: String) -> String? {
     return nil;
 }
 
+func getArgumentListWithOption(opt: String) -> [String] {
+    
+    if let index = args.indexOf(opt) where args.count >= (index + 1) {
+        return Array(args[index+1..<args.count])
+    }
+    return [];
+}
+
+
 //!MARK: - Installation
-func install(uuidString: String, path: String){
+func install(uuidString: String, paths: [String]){
     
     guard let UUID = NSUUID(UUIDString: uuidString) else {
         
@@ -38,17 +47,22 @@ func install(uuidString: String, path: String){
         return
     }
     
-    var filePath = path
-    if filePath.containsString("~"){
-        filePath = (filePath as NSString).stringByExpandingTildeInPath
-    }
     
-    if !NSFileManager.defaultManager().fileExistsAtPath(filePath) {
-        print("Invalid path");
-        return
-    }
+    let URLs = paths.map( { (var filePath) -> String? in
+        if filePath.containsString("~"){
+            filePath = (filePath as NSString).stringByExpandingTildeInPath
+        }
+        
+        if !NSFileManager.defaultManager().fileExistsAtPath(filePath) {
+            print("Invalid path");
+            return nil
+        } else {
+            return filePath
+        }
+        
+    }).flatMap { $0 }.map { NSURL(fileURLWithPath: $0) }
     
-    let installer = SimulatorInstaller(uuid: UUID, certificate: NSURL(fileURLWithPath: filePath))
+    let installer = SimulatorInstaller(uuid: UUID, certificates: URLs)
     
     installer.install()
     installer.closeSimulator()
@@ -67,14 +81,22 @@ if(!AXIsProcessTrustedWithOptions(options)){
 }
 
 
-guard let uuid = getArgumentWithOption(UUIDArgument), let certificate = getArgumentWithOption(CertificateArgument) else {
-    print("Missing parameters")
+guard let uuid = getArgumentWithOption(UUIDArgument) else {
+    print("Missing UUID parameters")
     printUsage()
     exit(1)
 }
 
+let certificates = getArgumentListWithOption(CertificateArgument)
 
-install(uuid, path: certificate)
+if certificates.count > 0 {
+    install(uuid, paths: certificates)
+} else {
+    print("Missing certificates parameters")
+    printUsage()
+    exit(1)
+}
+
 
 
 
